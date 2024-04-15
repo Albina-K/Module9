@@ -186,8 +186,18 @@ namespace Module9
             showDelegate += ShowMessage2;///добавление методов через делегат посредством +=
             showDelegate += ShowMessage3;
             showDelegate += ShowMessage4;
-
             showDelegate.Invoke();
+
+            ///объединение делегатов
+            ShowDelegate showdelegate1 = ShowMessage1;
+            showdelegate1 += ShowMessage2;
+
+            ShowDelegate showdelegate2 = ShowMessage3;
+            showdelegate2 += ShowMessage4;
+
+            ShowDelegate showdelegate3 = showdelegate1 + showdelegate2;
+
+            showdelegate3.Invoke();
         }
 
         static void ShowMessage1()
@@ -208,5 +218,101 @@ namespace Module9
         }
 
     }
-    
+
+    class Program6
+    {
+        static void ShowMessage()
+        {
+            Console.WriteLine("Hello word");
+        }
+
+        static int Sum(int a, int b, int c)
+        {
+            return a + b + c;
+        }
+
+        static bool CheckLength(string _row)
+        {
+            if (_row.Length > 3) return true;
+            return false;
+        }
+
+       
+        delegate void ShowMessageDelegate();
+        delegate int SumDelegate(int a, int b, int c);
+        delegate bool CheckLenghtDelegate(string _row);
+
+
+        static void Main(string[] args)
+        {
+            ShowMessageDelegate showMessageDelegate = ShowMessage;
+            showMessageDelegate.Invoke();
+            ///заменяем на
+            ///Action showMessageDelegate = ShowMessage;
+            ///showMessageDelegate.Invoke();
+
+            SumDelegate sumDelegate = Sum;
+            int result = sumDelegate.Invoke(1, 30, 120);
+            Console.WriteLine(result);
+            ///заменяем на
+            ///Func < int,int,int,int > sumDelegate = Sum; последний паарметр всегда выходной, а первые входные
+            
+            CheckLenghtDelegate checkLenghtDelegate = CheckLength;
+            bool status = checkLenghtDelegate.Invoke("////");
+            Console.WriteLine(status);
+            ///заменяем на
+            ///Predicate < string > checkLengthDelegate = CheckLength; возвращает только логическое значение и не более одного входного параметра
+        }
+
+
+
+    }
+
+    public class AnonymousMethods
+    {
+        public delegate string GreetingsDelegate(string name);
+        public static string Greetings(string name)
+        {
+            return "Привет" + name + "Добро пожаловать на скиллфактори";
+        }
+
+        static void Main(string[] args)
+        {
+            GreetingsDelegate gt = new GreetingsDelegate(AnonymousMethods.Greetings);
+            string GreetingsMessage = gt.Invoke("Будущий гуру");
+            Console.WriteLine(GreetingsMessage);
+            Console.ReadKey();
+        }
+
+        ///or
+        public delegate string GreetingsDelegate(string name);
+        static void Main(string[] args)
+        {
+            GreetingsDelegate gt = delegate (string name)
+            {
+                return "Привет" + name + "Добро пожаловать на скиллфактори";
+            };
+            string GreetingsMessage = gt.Invoke("Pryanay");
+            Console.WriteLine(GreetingsMessage);
+            Console.ReadKey();
+        }
+
+        /// or        
+        public class AnonymousMethods
+        {
+            public delegate string GreetingsDelegate(string name);
+
+            static void Main(string[] args)
+            {
+                string Message = "добро пожаловать на SkillFactory!";
+                GreetingsDelegate gd = delegate (string name)
+                {
+                    return "Привет @" + name + " " + Message;
+                };
+                string GreetingsMessage = gd.Invoke("Будущий гуру");
+                Console.WriteLine(GreetingsMessage);
+                Console.ReadKey();
+            }
+        }
+    }
 }
