@@ -64,9 +64,9 @@ namespace Module9
                 throw ex;
             }
         }
-            
-        
-       
+
+
+
     }
 
     public class MyException : Exception
@@ -89,15 +89,15 @@ namespace Module9
         }
     }
 
-        public AccountDTO Authenticate(string _userName, string _password)
-        {
-            UserEntity findUser = base.FindByUsername(_userName);
-            if (findUser is null) throw new HumanException("Пользователь не найдет в системе");
-            if (findUser.password != _password) throw new HumanException("Пароль не корректный");
-            return new AccountDTO(findUser, _token.Generate(findUser.id), roleRepository.FinndByUserID(findUser.id));
+    public AccountDTO Authenticate(string _userName, string _password)
+    {
+        UserEntity findUser = base.FindByUsername(_userName);
+        if (findUser is null) throw new HumanException("Пользователь не найдет в системе");
+        if (findUser.password != _password) throw new HumanException("Пароль не корректный");
+        return new AccountDTO(findUser, _token.Generate(findUser.id), roleRepository.FinndByUserID(findUser.id));
 
-        }
-    public class ExceptionHandler:ActionFilterAttribute, IExceptionFilter
+    }
+    public class ExceptionHandler : ActionFilterAttribute, IExceptionFilter
     {
         readonly Error _error = new Error();
         public void OnException(ExceptionContext context)
@@ -123,12 +123,12 @@ namespace Module9
                 int result = Division(7, 0);
                 Console.WriteLine(result);
             }
-            ///блок сработает только если будет исключение DivideByZeroException
+            //блок сработает только если будет исключение DivideByZeroException
             catch (System.DivideByZeroException)
             {
                 Console.WriteLine("На ноль делить нельзя");
             }
-            ///или
+            //или
             catch (Exception ex)
             {
                 if (ex is DivideByZeroException) Console.WriteLine("На ноль делить нельзя");
@@ -139,7 +139,7 @@ namespace Module9
             {
                 Console.WriteLine("Блок Finally сработал");
             }
-          Console.ReadKey();
+            Console.ReadKey();
         }
     }
 
@@ -190,7 +190,7 @@ namespace Module9
             showDelegate += ShowMessage4;
             showDelegate.Invoke();
 
-            ///объединение делегатов
+            //объединение делегатов
             ShowDelegate showdelegate1 = ShowMessage1;
             showdelegate1 += ShowMessage2;
 
@@ -239,7 +239,7 @@ namespace Module9
             return false;
         }
 
-       
+
         delegate void ShowMessageDelegate();
         delegate int SumDelegate(int a, int b, int c);
         delegate bool CheckLenghtDelegate(string _row);
@@ -249,21 +249,21 @@ namespace Module9
         {
             ShowMessageDelegate showMessageDelegate = ShowMessage;
             showMessageDelegate.Invoke();
-            ///заменяем на
-            ///Action showMessageDelegate = ShowMessage;
-            ///showMessageDelegate.Invoke();
+            //заменяем на
+            //Action showMessageDelegate = ShowMessage;
+            //showMessageDelegate.Invoke();
 
             SumDelegate sumDelegate = Sum;
             int result = sumDelegate.Invoke(1, 30, 120);
             Console.WriteLine(result);
-            ///заменяем на
-            ///Func < int,int,int,int > sumDelegate = Sum; последний паарметр всегда выходной, а первые входные
-            
+            //заменяем на
+            //Func < int,int,int,int > sumDelegate = Sum; последний паарметр всегда выходной, а первые входные
+
             CheckLenghtDelegate checkLenghtDelegate = CheckLength;
             bool status = checkLenghtDelegate.Invoke("////");
             Console.WriteLine(status);
-            ///заменяем на
-            ///Predicate < string > checkLengthDelegate = CheckLength; возвращает только логическое значение и не более одного входного параметра
+            //заменяем на
+            //Predicate < string > checkLengthDelegate = CheckLength; возвращает только логическое значение и не более одного входного параметра
         }
 
 
@@ -355,7 +355,7 @@ namespace Module9
         }
         public static bool Promote(Employee employee) ///возвращает значение подходит ли сотрудник под условие повышения
         {
-            if (employee.Salary > 10000) 
+            if (employee.Salary > 10000)
             {
                 return true;
             }
@@ -368,10 +368,10 @@ namespace Module9
     }
 
     // класс сотрудников  
-    
+
     public class Employee
     {
-        
+
         public int ID { get; set; }
         public string Name { get; set; }
         public int Experience { get; set; }
@@ -380,10 +380,10 @@ namespace Module9
         //метод выводит повышенных сотрудников
         public static void PromoteEmpoyee(List<Employee> listEmployees, EligibleToPromotion IsEmploteeEligible)//на вход требует список сотрудников и воторой параметр это делегат
         {
-            ///цикл перебор каждого сотрудника из входного списка
-            foreach(Employee employee in listEmployees) 
+            //цикл перебор каждого сотрудника из входного списка
+            foreach (Employee employee in listEmployees)
             {
-                if (IsEmploteeEligible(employee))///условие, если попадает под условие повышения мы выводим данного сотрудника в консоль
+                if (IsEmploteeEligible(employee))//условие, если попадает под условие повышения мы выводим данного сотрудника в консоль
                 {
                     Console.WriteLine("Employee {0} Promoted,", employee.Name);
                 }
@@ -411,7 +411,7 @@ namespace Module9
         }
     }
 
-    class Program8_0///то что было до лямбда оператора
+    class Program8_0//то что было до лямбда оператора
     {
         delegate void ShowMessageDelegate(string _message);
         static void Main(string[] args)
@@ -443,7 +443,7 @@ namespace Module9
         }
     }
 
-    class Program9_0///было до лямбда оператора
+    class Program9_0//было до лямбда оператора
     {
         delegate int RandomNumberDelegate();
         static void Main(string[] args)
@@ -464,9 +464,9 @@ namespace Module9
     {
         public string Model { get; set; }
     }
-    class BMW : Car 
-    { 
-    
+    class BMW : Car
+    {
+
     }
     class Program10
     {
@@ -518,7 +518,7 @@ namespace Module9
         {
             return null;
         }
-        static void Main(string[] args) 
+        static void Main(string[] args)
         {
             DogInfo dog = GetAnimalInfo;
             dog.Invoke(new Dog());//через метод dog.Invoke присваиваем объект класса
@@ -545,3 +545,89 @@ namespace Module9
     {
 
     }
+
+    //class Del
+    //{
+    public delegate void Nofity(); //делегат
+    public class ProcessBusinessLogic //класс издатель
+    {
+        public event Nofity ProcessCompleted;//событие
+        public void StartProcess()
+        {
+            Console.WriteLine("Процесс начат");
+            OnProcessCompleted();
+        }
+        protected virtual void OnProcessCompleted()
+        {
+            ProcessCompleted?.Invoke();
+        }
+    }
+    //}
+
+    class Program13//является подписчиком ProcessComleted. регистрируется в событии с помощью оператора +=
+    {
+        public static void Main(string[] args)
+        {
+            ProcessBusinessLogic bl = new ProcessBusinessLogic();
+            bl.ProcessCompleted += bl_ProcessCompleted;//регистрируем событие
+            bl.StartProcess();
+        }
+        //перехватчик событий
+        public static void bl_ProcessCompleted()
+        {
+            Console.WriteLine("Процесс завершен");
+        }
+    }
+
+    class Program14
+    {
+        static void Main(string[] args)
+        {
+            NumberReader numberReader = new NumberReader();
+            numberReader.NumberEnteredEvent += ShowNumber;
+
+            while(true)
+            {
+                try
+                {
+                    numberReader.Read();
+                }
+                catch (FormatException)
+                {
+                    Console.WriteLine("Введено некорректное значение");
+                }
+            }            
+        }
+
+        static void ShowNumber(int number)
+        {
+            switch (number)
+            {
+                case 1: Console.WriteLine("введено значение 1"); break;
+                case 2: Console.WriteLine("введено значение 2"); break;
+            }
+        }
+    }
+
+    class NumberReader
+    {
+        public delegate void NumberEnteredDelegate(int number);
+        public event NumberEnteredDelegate NumberEnteredEvent;
+
+        public void Read()
+        {
+            Console.WriteLine();
+            Console.WriteLine("необходимо ввести значение либо 1, либо 2");
+
+            int number = Convert.ToInt32(Console.ReadLine());
+
+            if (number != 1 & number != 2) throw new FormatException();
+            NumberEntered(number);
+        }
+
+        protected virtual void NumberEntered(int number)
+        {
+            NumberEnteredEvent?.Invoke(number);
+        }
+    }
+}
